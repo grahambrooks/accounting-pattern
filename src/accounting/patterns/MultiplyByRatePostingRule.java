@@ -10,7 +10,7 @@ class MultiplyByRatePostingRule extends PostingRule {
 
     protected MonetaryAmount calculateAmount(AccountingEvent evt) {
 
-        Usage usageEvent = (Usage) evt;
-        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(usageEvent.getAmount().getAmount() * usageEvent.getRate()));
+        UsageEvent usageEventEvent = (UsageEvent) evt;
+        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(usageEventEvent.getAmount().getAmount() * usageEventEvent.getRate()));
     }
 }

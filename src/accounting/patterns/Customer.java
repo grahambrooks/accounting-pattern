@@ -3,12 +3,13 @@ package accounting.patterns;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer extends NamedObject {
+public class Customer {
     private final ServiceAgreement serviceAgreement;
+    private final String name;
     private List<Entry> entries = new ArrayList<>();
 
     public Customer(String name, ServiceAgreement serviceAgreement) {
-        super(name);
+        this.name = name;
         this.serviceAgreement = serviceAgreement;
     }
 
@@ -23,5 +24,9 @@ public class Customer extends NamedObject {
 
     public Entry getEntry(int index) {
         return entries.get(index);
+    }
+
+    public String getName() {
+        return name;
     }
 }

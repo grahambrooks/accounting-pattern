@@ -16,8 +16,8 @@ public class CustomerTest {
         Customer acm = new Customer("Acme Coffee Makers", new ServiceAgreement(10)
                 .addPostingRule(USAGE, new MultiplyByRatePostingRule(BASE_USAGE), LocalDate.of(1999, 10, 1)));
 
-        Usage usage = new Usage(new Quantity(50), LocalDate.of(1999, 10, 1), acm);
-        usage.process();
+        UsageEvent usageEvent = new UsageEvent(new Quantity(50), LocalDate.of(1999, 10, 1), acm);
+        usageEvent.process();
 
         Entry resultingEntry = acm.getEntry(0);
         assertThat(new MonetaryAmount("USD", 500), is(resultingEntry.getAmount()));

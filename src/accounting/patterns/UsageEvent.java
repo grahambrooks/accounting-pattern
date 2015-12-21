@@ -2,10 +2,10 @@ package accounting.patterns;
 
 import java.time.LocalDate;
 
-public class Usage extends AccountingEvent {
+public class UsageEvent extends AccountingEvent {
     private final Quantity amount;
 
-    public Usage(Quantity amount, LocalDate date, Customer customer) {
+    public UsageEvent(Quantity amount, LocalDate date, Customer customer) {
         super(EventType.USAGE, date, customer);
         this.amount = amount;
     }
