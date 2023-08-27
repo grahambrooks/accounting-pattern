@@ -1,8 +1,8 @@
 package accounting.patterns;
 
 public class EntryType {
-    static EntryType BASE_USAGE = new EntryType("Base Usage");
-    static EntryType SERVICE = new EntryType("Service Fee");
+    static final EntryType BASE_USAGE = new EntryType("Base Usage");
+    static final EntryType SERVICE = new EntryType("Service Fee");
     private final String name;
 
     public EntryType(String name) {

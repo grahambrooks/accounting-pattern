@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class Entry {
     private final LocalDate date;
-    private final EntryType type;
+    private final EntryType entryType;
     private final MonetaryAmount amount;
 
-    public Entry(LocalDate date, EntryType type, MonetaryAmount amount) {
+    public Entry(LocalDate date, EntryType entryType, MonetaryAmount amount) {
         this.date = date;
-        this.type = type;
+        this.entryType = entryType;
         this.amount = amount;
     }
 

@@ -15,5 +15,5 @@ abstract class PostingRule {
         makeEntry(evt, calculateAmount(evt));
     }
 
-    abstract protected MonetaryAmount calculateAmount(AccountingEvent evt);
+    protected abstract MonetaryAmount calculateAmount(AccountingEvent evt);
 }

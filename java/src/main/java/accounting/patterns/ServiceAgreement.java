@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ServiceAgreement {
     private final double rate;
-    private Map<EventType, TemporalCollection<PostingRule>> postingRules = new HashMap<>();
+    private final Map<EventType, TemporalCollection<PostingRule>> postingRules = new HashMap<>();
 
     public ServiceAgreement(double rate) {
         this.rate = rate;
@@ -22,9 +22,7 @@ public class ServiceAgreement {
     }
 
     private TemporalCollection<PostingRule> temporalCollection(EventType eventType) {
-        if (postingRules.get(eventType) == null) {
-            postingRules.put(eventType, new TemporalCollection<>());
-        }
+        postingRules.computeIfAbsent(eventType, k -> new TemporalCollection<>());
         return postingRules.get(eventType);
     }
 

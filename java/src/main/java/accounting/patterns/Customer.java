@@ -6,7 +6,7 @@ import java.util.List;
 public class Customer {
     private final ServiceAgreement serviceAgreement;
     private final String name;
-    private List<Entry> entries = new ArrayList<>();
+    private final List<Entry> entries = new ArrayList<>();
 
     public Customer(String name, ServiceAgreement serviceAgreement) {
         this.name = name;
