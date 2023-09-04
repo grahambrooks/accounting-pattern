@@ -12,8 +12,8 @@ public class ServiceAgreement {
         this.rate = rate;
     }
 
-    ServiceAgreement addPostingRule(EventType eventType, PostingRule rule, LocalDate date) {
-        temporalCollection(eventType).put(date, rule);
+    ServiceAgreement addPostingRule(EventType eventType, PostingRule rule, LocalDate effectiveDate) {
+        temporalCollection(eventType).put(effectiveDate, rule);
         return this;
     }
 
@@ -28,5 +28,14 @@ public class ServiceAgreement {
 
     public double getRate() {
         return rate;
+    }
+
+    public Entry post(EventType eventType, LocalDate eventDate, Quantity quantity) {
+        PostingRule postingRule = getPostingRule(eventType, eventDate);
+
+        if (postingRule == null) {
+            throw new RuntimeException("No posting rule for " + eventType + " on " + eventDate);
+        }
+        return postingRule.processEvent(eventDate, quantity, this.rate);
     }
 }

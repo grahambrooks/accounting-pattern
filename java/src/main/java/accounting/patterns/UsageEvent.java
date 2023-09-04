@@ -3,15 +3,15 @@ package accounting.patterns;
 import java.time.LocalDate;
 
 public class UsageEvent extends AccountingEvent {
-    private final Quantity amount;
+    private final Quantity quantity;
 
-    public UsageEvent(Quantity amount, LocalDate date, Customer customer) {
+    public UsageEvent(Customer customer, Quantity quantity, LocalDate date) {
         super(EventType.USAGE, date, customer);
-        this.amount = amount;
+        this.quantity = quantity;
     }
 
-    public Quantity getAmount() {
-        return amount;
+    public Quantity getQuantity() {
+        return quantity;
     }
 
     public double getRate() {

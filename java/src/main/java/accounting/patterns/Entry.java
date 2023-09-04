@@ -3,12 +3,12 @@ package accounting.patterns;
 import java.time.LocalDate;
 
 public class Entry {
-    private final LocalDate date;
+    private final LocalDate entryDate;
     private final EntryType entryType;
     private final MonetaryAmount amount;
 
-    public Entry(LocalDate date, EntryType entryType, MonetaryAmount amount) {
-        this.date = date;
+    public Entry(LocalDate entryDate, EntryType entryType, MonetaryAmount amount) {
+        this.entryDate = entryDate;
         this.entryType = entryType;
         this.amount = amount;
     }

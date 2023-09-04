@@ -22,7 +22,12 @@ class AccountingEvent {
     }
 
     public void process() {
-        findRule().process(this);
+
+        PostingRule rule = findRule();
+        if (rule == null) {
+            throw new RuntimeException("No posting rule for " + type + " on " + eventDate);
+        }
+        rule.process(this);
     }
 
     private PostingRule findRule() {
