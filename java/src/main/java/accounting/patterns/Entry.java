@@ -16,4 +16,8 @@ public class Entry {
     public MonetaryAmount getAmount() {
         return amount;
     }
+
+    public LocalDate getEntryDate() {
+        return entryDate;
+    }
 }

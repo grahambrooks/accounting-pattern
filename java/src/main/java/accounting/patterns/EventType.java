@@ -2,6 +2,7 @@ package accounting.patterns;
 
 public class EventType {
     public static EventType USAGE = eventType("usage");
+    public static EventType SERVICE = eventType("service fee");
     private final String name;
 
     public EventType(String name) {
@@ -14,5 +15,12 @@ public class EventType {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "EventType{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

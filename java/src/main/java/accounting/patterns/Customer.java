@@ -18,20 +18,18 @@ public class Customer {
         return name;
     }
 
-    public ServiceAgreement getServiceAgreement() {
-        return serviceAgreement;
-    }
-
-    public void addEntry(Entry newEntry) {
-        entries.add(newEntry);
-
-    }
-
     public Entry getEntry(int index) {
         return entries.get(index);
     }
 
     public void post(EventType eventType, LocalDate eventDate, Quantity quantity) {
-        addEntry(getServiceAgreement().post(eventType, eventDate, quantity));
+        entries.add(serviceAgreement.post(eventType, eventDate, quantity));
+    }
+
+    public MonetaryAmount balance(LocalDate balanceDate) {
+        return entries.stream()
+                .filter(entry -> entry.getEntryDate().isBefore(balanceDate))
+                .map(Entry::getAmount)
+                .reduce(MonetaryAmount.ZERO, MonetaryAmount::add);
     }
 }
