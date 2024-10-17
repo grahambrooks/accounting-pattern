@@ -1,13 +1,12 @@
 package accounting.patterns;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import org.hamcrest.MatcherAssert;
 
 import java.time.LocalDate;
 
 import static accounting.patterns.EntryType.BASE_USAGE;
 import static accounting.patterns.EventType.USAGE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CustomerTest {
 
@@ -20,11 +19,11 @@ public class CustomerTest {
         usageEvent.process();
 
         var resultingEntry = acm.getEntry(0);
-        MatcherAssert.assertThat(new MonetaryAmount("USD", 500), is(resultingEntry.getAmount()));
+        assertEquals(new MonetaryAmount("USD", 500), resultingEntry.getAmount());
     }
 
     @Test
     public void customersAreNamed() throws Exception {
-        MatcherAssert.assertThat(new Customer("foo", new ServiceAgreement(1)).getName(), is("foo"));
+        assertEquals(new Customer("foo", new ServiceAgreement(1)).getName(), "foo");
     }
 }
