@@ -13,7 +13,7 @@ public class TemporalCollection<T> {
     }
 
     public T get(LocalDate when) {
-        for (LocalDate d : entries.keySet().stream().sorted((a,b) -> b.compareTo(a)).collect(Collectors.toList())) {
+        for (var d : entries.keySet().stream().sorted((a,b) -> b.compareTo(a)).collect(Collectors.toList())) {
             if (when.isEqual(d) || when.isAfter(d)) {
                 return entries.get(d);
             }

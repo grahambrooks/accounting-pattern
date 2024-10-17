@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 public class EntryTest {
     @Test
     public void entriesAreDated() throws Exception {
-        final Entry entry = new Entry(LocalDate.now(), EntryType.entryType("foo"), new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1)));
+        var entry = new Entry(LocalDate.now(), EntryType.entryType("foo"), new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1)));
 
         assertThat(entry.getAmount(), is(new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1))));
     }

@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
 public class MonetaryAmountTest {
     @Test
     public void differentIfAmountsDiffer() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
+        var monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
 
 
         assertThat(monetaryAmount1.equals(monetaryAmount2), is(false));
@@ -21,8 +21,8 @@ public class MonetaryAmountTest {
 
     @Test
     public void differentIfCurrenciesDiffer() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
+        var monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount2 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
 
 
         assertThat(monetaryAmount1.equals(monetaryAmount2), is(false));
@@ -30,8 +30,8 @@ public class MonetaryAmountTest {
 
     @Test
     public void sameIfCurrencyAndValueMatch() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
 
 
         assertThat(monetaryAmount1.equals(monetaryAmount2), is(true));
@@ -39,10 +39,10 @@ public class MonetaryAmountTest {
 
     @Test
     public void hashcodeVariesByCurrencyAndValue() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount3 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount4 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
+        var monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
+        var monetaryAmount3 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
+        var monetaryAmount4 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
 
 
         assertThat(monetaryAmount1.hashCode() == monetaryAmount2.hashCode(), is(true));

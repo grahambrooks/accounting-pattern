@@ -8,7 +8,8 @@ abstract class PostingRule {
     }
 
     private void makeEntry(AccountingEvent event, MonetaryAmount amount) {
-        event.getCustomer().addEntry(new Entry(event.getEventDate(), type, amount));
+        var entry = new Entry(event.getEventDate(), type, amount);
+        event.getCustomer().addEntry(entry);
     }
 
     public void process(AccountingEvent evt) {

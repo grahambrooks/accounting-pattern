@@ -17,7 +17,7 @@ public class TemporalCollectionTest {
 
     @Test
     public void returnsNullIfNoneValid() {
-        final TemporalCollection<String> collection = new TemporalCollection<>();
+        var collection = new TemporalCollection<String>();
         collection.put(LocalDate.now().plusDays(1), "foo");
 
         assertThat(collection.get(LocalDate.now()), is(nullValue()));
@@ -25,7 +25,7 @@ public class TemporalCollectionTest {
 
     @Test
     public void returnsValueIfInRange() {
-        final TemporalCollection<String> collection = new TemporalCollection<>();
+        var collection = new TemporalCollection<String>();
         collection.put(LocalDate.now().minusDays(1), "foo");
 
         assertThat(collection.get(LocalDate.now()), is("foo"));
@@ -33,7 +33,7 @@ public class TemporalCollectionTest {
 
     @Test
     public void returnsMostRecent() {
-        final TemporalCollection<String> collection = new TemporalCollection<>();
+        var collection = new TemporalCollection<String>();
         collection.put(LocalDate.now().minusDays(2), "Day before Yesterday");
         collection.put(LocalDate.now().minusDays(1), "Yesterday");
 
@@ -42,8 +42,8 @@ public class TemporalCollectionTest {
 
     @Test
     public void returnsForSameDay() {
-        final TemporalCollection<String> collection = new TemporalCollection<>();
-        final LocalDate yesterday = LocalDate.now().minusDays(1);
+        var collection = new TemporalCollection<String>();
+        var yesterday = LocalDate.now().minusDays(1);
         collection.put(yesterday, "Yesterday");
 
         assertThat(collection.get(yesterday), is("Yesterday"));

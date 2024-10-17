@@ -9,8 +9,7 @@ class MultiplyByRatePostingRule extends PostingRule {
     }
 
     protected MonetaryAmount calculateAmount(AccountingEvent evt) {
-
-        UsageEvent usageEventEvent = (UsageEvent) evt;
+        var usageEventEvent = (UsageEvent) evt;
         return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(usageEventEvent.getAmount().getAmount() * usageEventEvent.getRate()));
     }
 }
