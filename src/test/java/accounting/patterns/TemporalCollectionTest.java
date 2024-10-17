@@ -1,5 +1,6 @@
 package accounting.patterns;
 
+
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -7,44 +8,44 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class TemporalCollectionTest {
+
+class TemporalCollectionTest {
     @Test
-    public void getReturnsNullWhenEmpty() {
+    void getReturnsNullWhenEmpty() {
         assertNull(new TemporalCollection<String>().get(LocalDate.now()));
     }
 
     @Test
-    public void returnsNullIfNoneValid() {
-        var collection = new TemporalCollection<String>();
+    void returnsNullIfNoneValid() {
+        final TemporalCollection<String> collection = new TemporalCollection<>();
         collection.put(LocalDate.now().plusDays(1), "foo");
 
         assertNull(collection.get(LocalDate.now()));
     }
 
     @Test
-    public void returnsValueIfInRange() {
-        var collection = new TemporalCollection<String>();
+    void returnsValueIfInRange() {
+        final TemporalCollection<String> collection = new TemporalCollection<>();
         collection.put(LocalDate.now().minusDays(1), "foo");
 
-        assertEquals(collection.get(LocalDate.now()), "foo");
+        assertEquals("foo", collection.get(LocalDate.now()));
     }
 
     @Test
-    public void returnsMostRecent() {
-        var collection = new TemporalCollection<String>();
+    void returnsMostRecent() {
+        final TemporalCollection<String> collection = new TemporalCollection<>();
         collection.put(LocalDate.now().minusDays(2), "Day before Yesterday");
         collection.put(LocalDate.now().minusDays(1), "Yesterday");
 
-        assertEquals(collection.get(LocalDate.now()), "Yesterday");
+        assertEquals("Yesterday", collection.get(LocalDate.now()));
     }
 
     @Test
-    public void returnsForSameDay() {
-        var collection = new TemporalCollection<String>();
-        var yesterday = LocalDate.now().minusDays(1);
+    void returnsForSameDay() {
+        final TemporalCollection<String> collection = new TemporalCollection<>();
+        final LocalDate yesterday = LocalDate.now().minusDays(1);
         collection.put(yesterday, "Yesterday");
 
-        assertEquals(collection.get(yesterday), "Yesterday");
+        assertEquals("Yesterday", collection.get(yesterday));
     }
-
 }

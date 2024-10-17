@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class ServiceAgreement {
     private final double rate;
-    private Map<EventType, TemporalCollection<PostingRule>> postingRules = new HashMap<>();
+    private final Map<EventType, TemporalCollection<PostingRule>> postingRules = new HashMap<>();
 
     public ServiceAgreement(double rate) {
         this.rate = rate;
     }
 
-    ServiceAgreement addPostingRule(EventType eventType, PostingRule rule, LocalDate date) {
-        temporalCollection(eventType).put(date, rule);
+    ServiceAgreement addPostingRule(EventType eventType, PostingRule rule, LocalDate effectiveDate) {
+        temporalCollection(eventType).put(effectiveDate, rule);
         return this;
     }
 
@@ -22,13 +22,20 @@ public class ServiceAgreement {
     }
 
     private TemporalCollection<PostingRule> temporalCollection(EventType eventType) {
-        if (postingRules.get(eventType) == null) {
-            postingRules.put(eventType, new TemporalCollection<>());
-        }
+        postingRules.computeIfAbsent(eventType, k -> new TemporalCollection<>());
         return postingRules.get(eventType);
     }
 
     public double getRate() {
         return rate;
+    }
+
+    public Entry post(EventType eventType, LocalDate eventDate, Quantity quantity) {
+        PostingRule postingRule = getPostingRule(eventType, eventDate);
+
+        if (postingRule == null) {
+            throw new RuntimeException("No posting rule for " + eventType + " on " + eventDate);
+        }
+        return postingRule.processEvent(eventDate, quantity, this.rate);
     }
 }

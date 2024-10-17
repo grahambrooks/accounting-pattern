@@ -8,8 +8,8 @@ class MultiplyByRatePostingRule extends PostingRule {
         super(type);
     }
 
-    protected MonetaryAmount calculateAmount(AccountingEvent evt) {
-        var usageEventEvent = (UsageEvent) evt;
-        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(usageEventEvent.getAmount().getAmount() * usageEventEvent.getRate()));
+    @Override
+    protected MonetaryAmount calculateAmount(Quantity quantity, double rate) {
+        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(quantity.getValue() * rate));
     }
 }

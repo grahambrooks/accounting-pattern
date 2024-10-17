@@ -7,7 +7,7 @@ public class Quantity {
         this.amount = amount;
     }
 
-    public long getAmount() {
+    public long getValue() {
         return amount;
     }
 }

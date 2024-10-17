@@ -1,5 +1,6 @@
 package accounting.patterns;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -21,13 +22,13 @@ public class AcceptanceTest {
         customer.post(EventType.USAGE, effectiveDate.plusMonths(2), new Quantity(50));
         customer.post(EventType.SERVICE, effectiveDate.plusMonths(12), new Quantity(1));
 
-        assertEquals(new BigDecimal(600), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal(600), customer.balance(LocalDate.of(2020, 10, 1)).amount());
 
         customer.post(EventType.USAGE, effectiveDate.plusMonths(2), new Quantity(50));
 
-        assertEquals(new BigDecimal(1100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal(1100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
 
         customer.post(EventType.SERVICE, effectiveDate.plusMonths(25), new Quantity(1));
-        assertEquals(new BigDecimal(2100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal(2100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
     }
 }
