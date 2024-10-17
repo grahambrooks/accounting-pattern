@@ -1,20 +1,17 @@
 package accounting.patterns;
 
+import java.time.LocalDate;
+
 abstract class PostingRule {
-    protected EntryType type;
+    protected EntryType eventType;
 
     protected PostingRule(EntryType type) {
-        this.type = type;
+        this.eventType = type;
     }
 
-    private void makeEntry(AccountingEvent event, MonetaryAmount amount) {
-        var entry = new Entry(event.getEventDate(), type, amount);
-        event.getCustomer().addEntry(entry);
-    }
+    protected abstract MonetaryAmount calculateAmount(Quantity quantity, double rate);
 
-    public void process(AccountingEvent evt) {
-        makeEntry(evt, calculateAmount(evt));
+    public Entry processEvent(LocalDate eventDate, Quantity quantity, double rate) {
+        return new Entry(eventDate, eventType, calculateAmount(quantity, rate));
     }
-
-    abstract protected MonetaryAmount calculateAmount(AccountingEvent evt);
 }

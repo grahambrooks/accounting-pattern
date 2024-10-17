@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Currency;
 
 public class MonetaryAmount {
+    public static final MonetaryAmount ZERO = new MonetaryAmount("USD", 0);
     private final Currency currency;
     private final BigDecimal amount;
 
@@ -14,6 +15,13 @@ public class MonetaryAmount {
     public MonetaryAmount(Currency currency, BigDecimal amount) {
         this.currency = currency;
         this.amount = amount;
+    }
+
+    public MonetaryAmount add(MonetaryAmount other) {
+        if (!currency.equals(other.currency)) {
+            throw new IllegalArgumentException("Currencies must be the same");
+        }
+        return new MonetaryAmount(currency, amount.add(other.amount));
     }
 
     @Override
@@ -33,5 +41,9 @@ public class MonetaryAmount {
         int result = currency != null ? currency.hashCode() : 0;
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         return result;
+    }
+
+    public BigDecimal amount() {
+        return amount;
     }
 }
