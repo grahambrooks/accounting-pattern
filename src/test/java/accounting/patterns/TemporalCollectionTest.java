@@ -1,13 +1,13 @@
 package accounting.patterns;
 
 import accounting.patterns.TemporalCollection;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
 
 public class TemporalCollectionTest {
     @Test

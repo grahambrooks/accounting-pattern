@@ -3,14 +3,14 @@ package accounting.patterns;
 import accounting.patterns.Entry;
 import accounting.patterns.EntryType;
 import accounting.patterns.MonetaryAmount;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 public class EntryTest {
     @Test
