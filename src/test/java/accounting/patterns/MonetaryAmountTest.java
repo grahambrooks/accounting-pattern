@@ -1,54 +1,75 @@
 package accounting.patterns;
 
-
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+class MonetaryAmountTest {
+    private static final Currency USD = Currency.getInstance("USD");
+    private static final Currency GBP = Currency.getInstance("GBP");
 
-
-public class MonetaryAmountTest {
     @Test
-    public void differentIfAmountsDiffer() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
-
-
-        assertFalse(monetaryAmount1.equals(monetaryAmount2));
+    void testZeroConstant() {
+        assertEquals(BigDecimal.ZERO, MonetaryAmount.ZERO.amount());
+        assertEquals("USD", MonetaryAmount.ZERO.currency().getCurrencyCode());
     }
 
     @Test
-    public void differentIfCurrenciesDiffer() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
-
-
-        assertFalse(monetaryAmount1.equals(monetaryAmount2));
+    void testFactoryMethodWithLong() {
+        MonetaryAmount amount = MonetaryAmount.of("USD", 100);
+        assertEquals(new BigDecimal(100), amount.amount());
+        assertEquals(USD, amount.currency());
     }
 
     @Test
-    public void sameIfCurrencyAndValueMatch() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-
-
-        assertTrue(monetaryAmount1.equals(monetaryAmount2));
+    void testFactoryMethodWithBigDecimal() {
+        BigDecimal value = new BigDecimal("10.50");
+        MonetaryAmount amount = MonetaryAmount.of(USD, value);
+        assertEquals(value, amount.amount());
+        assertEquals(USD, amount.currency());
     }
 
     @Test
-    public void hashcodeVariesByCurrencyAndValue() throws Exception {
-        final MonetaryAmount monetaryAmount1 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount2 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount3 = new MonetaryAmount(Currency.getInstance("GBP"), new BigDecimal(1));
-        final MonetaryAmount monetaryAmount4 = new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(2));
+    void testAddition() {
+        MonetaryAmount amount1 = MonetaryAmount.of(USD, new BigDecimal("10.50"));
+        MonetaryAmount amount2 = MonetaryAmount.of(USD, new BigDecimal("5.25"));
+        MonetaryAmount sum = amount1.add(amount2);
+        assertEquals(new BigDecimal("15.75"), sum.amount());
+        assertEquals(USD, sum.currency());
+    }
 
+    @Test
+    void testAdditionWithDifferentCurrenciesFails() {
+        MonetaryAmount usd = MonetaryAmount.of(USD, BigDecimal.TEN);
+        MonetaryAmount gbp = MonetaryAmount.of(GBP, BigDecimal.TEN);
+        assertThrows(IllegalArgumentException.class, () -> usd.add(gbp));
+    }
 
-        assertTrue(monetaryAmount1.hashCode() == monetaryAmount2.hashCode());
+    @Test
+    void testNullValidation() {
+        assertAll(
+            () -> assertThrows(NullPointerException.class, () -> MonetaryAmount.of((Currency) null, BigDecimal.TEN)),
+            () -> assertThrows(NullPointerException.class, () -> MonetaryAmount.of(USD, null)),
+            () -> assertThrows(NullPointerException.class, () -> MonetaryAmount.of((String) null, 100))
+        );
+    }
 
-        assertFalse(monetaryAmount1.hashCode() == monetaryAmount3.hashCode());
-        assertFalse(monetaryAmount1.hashCode() == monetaryAmount4.hashCode());
+    @Test
+    void testEquality() {
+        MonetaryAmount amount1 = MonetaryAmount.of(USD, BigDecimal.ONE);
+        MonetaryAmount amount2 = MonetaryAmount.of(USD, BigDecimal.ONE);
+        MonetaryAmount amount3 = MonetaryAmount.of(USD, BigDecimal.TEN);
+        MonetaryAmount amount4 = MonetaryAmount.of(GBP, BigDecimal.ONE);
+
+        assertAll(
+            () -> assertEquals(amount1, amount2),
+            () -> assertNotEquals(amount1, amount3),
+            () -> assertNotEquals(amount1, amount4),
+            () -> assertEquals(amount1.hashCode(), amount2.hashCode()),
+            () -> assertNotEquals(amount1.hashCode(), amount3.hashCode()),
+            () -> assertNotEquals(amount1.hashCode(), amount4.hashCode())
+        );
     }
 }

@@ -1,26 +1,53 @@
 package accounting.patterns;
 
-public class EventType {
-    public static EventType USAGE = eventType("usage");
-    public static EventType SERVICE = eventType("service fee");
+/**
+ * Represents the type of an accounting event.
+ * This enum defines the standard event types used in the accounting system.
+ */
+public enum EventType {
+    /**
+     * Represents a usage event
+     */
+    USAGE("usage"),
+
+    /**
+     * Represents a service fee event
+     */
+    SERVICE("service fee");
+
     private final String name;
 
-    public EventType(String name) {
+    /**
+     * Creates a new EventType with the specified name.
+     *
+     * @param name the name for this event type
+     */
+    EventType(String name) {
         this.name = name;
     }
 
-    public static EventType eventType(String name) {
-        return new EventType(name);
-    }
-
+    /**
+     * Returns the name of this event type.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "EventType{" +
-                "name='" + name + '\'' +
-                '}';
+    /**
+     * Returns the EventType with the specified name, if it exists.
+     *
+     * @param name the name to look up
+     * @return the matching EventType
+     * @throws IllegalArgumentException if no EventType matches the given name
+     */
+    public static EventType fromName(String name) {
+        for (EventType type : values()) {
+            if (type.getName().equalsIgnoreCase(name)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No EventType found for name: " + name);
     }
 }

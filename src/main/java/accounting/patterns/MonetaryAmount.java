@@ -2,48 +2,46 @@ package accounting.patterns;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Objects;
 
-public class MonetaryAmount {
-    public static final MonetaryAmount ZERO = new MonetaryAmount("USD", 0);
-    private final Currency currency;
-    private final BigDecimal amount;
+/**
+ * Represents an immutable monetary amount with a specific currency.
+ * This class is thread-safe and can be used as a value type.
+ */
+public final record MonetaryAmount(Currency currency, BigDecimal amount) {
+    public static final MonetaryAmount ZERO = of("USD", 0);
 
-    public MonetaryAmount(String currencyName, long amount) {
-        this(Currency.getInstance(currencyName), new BigDecimal(amount));
+    /**
+     * Creates a new MonetaryAmount with validation.
+     */
+    public MonetaryAmount {
+        Objects.requireNonNull(currency, "Currency must not be null");
+        Objects.requireNonNull(amount, "Amount must not be null");
     }
 
-    public MonetaryAmount(Currency currency, BigDecimal amount) {
-        this.currency = currency;
-        this.amount = amount;
+    /**
+     * Factory method to create a MonetaryAmount from a currency code and a long value.
+     */
+    public static MonetaryAmount of(String currencyCode, long amount) {
+        return new MonetaryAmount(Currency.getInstance(currencyCode), BigDecimal.valueOf(amount));
     }
 
+    /**
+     * Factory method to create a MonetaryAmount from a Currency and a BigDecimal.
+     */
+    public static MonetaryAmount of(Currency currency, BigDecimal amount) {
+        return new MonetaryAmount(currency, amount);
+    }
+
+    /**
+     * Adds another MonetaryAmount to this one, ensuring currencies match.
+     * @throws IllegalArgumentException if currencies don't match
+     */
     public MonetaryAmount add(MonetaryAmount other) {
         if (!currency.equals(other.currency)) {
-            throw new IllegalArgumentException("Currencies must be the same");
+            throw new IllegalArgumentException("Cannot add amounts with different currencies: " + 
+                currency.getCurrencyCode() + " != " + other.currency.getCurrencyCode());
         }
         return new MonetaryAmount(currency, amount.add(other.amount));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        MonetaryAmount that = (MonetaryAmount) o;
-
-        if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
-        return amount != null ? amount.equals(that.amount) : that.amount == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = currency != null ? currency.hashCode() : 0;
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        return result;
-    }
-
-    public BigDecimal amount() {
-        return amount;
     }
 }

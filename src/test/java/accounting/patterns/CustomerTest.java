@@ -3,7 +3,9 @@ package accounting.patterns;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Currency;
 
 import static accounting.patterns.EntryType.BASE_USAGE;
 import static accounting.patterns.EventType.USAGE;
@@ -18,7 +20,7 @@ class CustomerTest {
     void testPostingAnEvent() {
         LocalDate effectiveDate = LocalDate.of(1999, 10, 1);
         Customer customer = new Customer("Acme Coffee Makers",
-                new ServiceAgreement(10)
+                new ServiceAgreement(new BigDecimal(10))
                         .addPostingRule(USAGE,
                                 new MultiplyByRatePostingRule(BASE_USAGE),
                                 effectiveDate));
@@ -26,7 +28,7 @@ class CustomerTest {
         customer.post(USAGE, effectiveDate, new Quantity(50));
 
         Entry resultingEntry = customer.getEntry(0);
-        assertEquals(new MonetaryAmount("USD", 500), resultingEntry.getAmount());
+        assertEquals(new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(500)), resultingEntry.amount());
     }
 
     @Test
@@ -34,7 +36,7 @@ class CustomerTest {
     void testCustomerWithNoRules() {
         LocalDate effectiveDate = LocalDate.of(1999, 10, 1);
         Customer customer = new Customer("Acme Coffee Makers",
-                new ServiceAgreement(10));
+                new ServiceAgreement(new BigDecimal(10)));
 
         assertThrows(RuntimeException.class, () -> customer.post(USAGE, effectiveDate, new Quantity(50)));
     }
@@ -42,6 +44,6 @@ class CustomerTest {
     @Test
     @DisplayName("Customers have names")
     void customersAreNamed() {
-        assertEquals("foo", new Customer("foo", new ServiceAgreement(1)).getName());
+        assertEquals("foo", new Customer("foo", new ServiceAgreement(new BigDecimal(1))).getName());
     }
 }

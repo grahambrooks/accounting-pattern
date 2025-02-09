@@ -13,7 +13,7 @@ public class AcceptanceTest {
     public void test() {
         LocalDate effectiveDate = LocalDate.of(1999, 10, 1);
         var customer = new Customer("Acme Coffee Makers",
-                new ServiceAgreement(10)
+                new ServiceAgreement(new BigDecimal(10))
                         .addPostingRule(EventType.USAGE, new MultiplyByRatePostingRule(EntryType.BASE_USAGE), effectiveDate)
                         .addPostingRule(EventType.SERVICE, new AnnualServiceFeeRule(EntryType.SERVICE, 100), effectiveDate)
                         .addPostingRule(EventType.SERVICE, new AnnualServiceFeeRule(EntryType.SERVICE, 1000), effectiveDate.plusYears(2))

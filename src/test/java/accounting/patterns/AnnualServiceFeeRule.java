@@ -1,5 +1,8 @@
 package accounting.patterns;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+
 public class AnnualServiceFeeRule extends PostingRule {
     private final long amount;
 
@@ -9,7 +12,7 @@ public class AnnualServiceFeeRule extends PostingRule {
     }
 
     @Override
-    protected MonetaryAmount calculateAmount(Quantity quantity, double rate) {
-        return new MonetaryAmount("USD", quantity.getValue() * this.amount);
+    protected MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate) {
+        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(quantity.value() * this.amount));
     }
 }
