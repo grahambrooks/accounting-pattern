@@ -4,6 +4,7 @@ package accounting.patterns;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class TemporalCollectionTest {
     @Test
     void getReturnsNullWhenEmpty() {
-        assertNull(new TemporalCollection<String>().get(LocalDate.now()));
+        assertNull(new TemporalCollection<String>().get(LocalDate.now()).orElse(null));
     }
 
     @Test
@@ -20,7 +21,7 @@ class TemporalCollectionTest {
         final TemporalCollection<String> collection = new TemporalCollection<>();
         collection.put(LocalDate.now().plusDays(1), "foo");
 
-        assertNull(collection.get(LocalDate.now()));
+        assertNull(collection.get(LocalDate.now()).orElse(null));
     }
 
     @Test
@@ -28,7 +29,7 @@ class TemporalCollectionTest {
         final TemporalCollection<String> collection = new TemporalCollection<>();
         collection.put(LocalDate.now().minusDays(1), "foo");
 
-        assertEquals("foo", collection.get(LocalDate.now()));
+        assertEquals(Optional.of("foo"), collection.get(LocalDate.now()));
     }
 
     @Test
@@ -37,7 +38,7 @@ class TemporalCollectionTest {
         collection.put(LocalDate.now().minusDays(2), "Day before Yesterday");
         collection.put(LocalDate.now().minusDays(1), "Yesterday");
 
-        assertEquals("Yesterday", collection.get(LocalDate.now()));
+        assertEquals(Optional.of("Yesterday"), collection.get(LocalDate.now()));
     }
 
     @Test
@@ -46,6 +47,6 @@ class TemporalCollectionTest {
         final LocalDate yesterday = LocalDate.now().minusDays(1);
         collection.put(yesterday, "Yesterday");
 
-        assertEquals("Yesterday", collection.get(yesterday));
+        assertEquals(Optional.of("Yesterday"), collection.get(yesterday));
     }
 }
