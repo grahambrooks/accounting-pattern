@@ -28,7 +28,7 @@ class CustomerTest {
         customer.post(USAGE, effectiveDate, new Quantity(50));
 
         Entry resultingEntry = customer.getEntry(0);
-        assertEquals(new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(500)), resultingEntry.amount());
+        assertEquals(new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal("500.00")), resultingEntry.amount());
     }
 
     @Test

@@ -22,13 +22,13 @@ public class AcceptanceTest {
         customer.post(EventType.USAGE, effectiveDate.plusMonths(2), new Quantity(50));
         customer.post(EventType.SERVICE, effectiveDate.plusMonths(12), new Quantity(1));
 
-        Assertions.assertEquals(new BigDecimal(600), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal("600.00"), customer.balance(LocalDate.of(2020, 10, 1)).amount());
 
         customer.post(EventType.USAGE, effectiveDate.plusMonths(2), new Quantity(50));
 
-        Assertions.assertEquals(new BigDecimal(1100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal("1100.00"), customer.balance(LocalDate.of(2020, 10, 1)).amount());
 
         customer.post(EventType.SERVICE, effectiveDate.plusMonths(25), new Quantity(1));
-        Assertions.assertEquals(new BigDecimal(2100), customer.balance(LocalDate.of(2020, 10, 1)).amount());
+        Assertions.assertEquals(new BigDecimal("2100.00"), customer.balance(LocalDate.of(2020, 10, 1)).amount());
     }
 }
