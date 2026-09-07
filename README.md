@@ -2,6 +2,14 @@
 
 Implementation of Martin Fowler's [accounting patterns article](http://martinfowler.com/apsupp/accounting.pdf) and [Accounting Narrative](http://martinfowler.com/eaaDev/AccountingNarrative.html).
 
+## Building
+
+Requires JDK 26 and Maven.
+
+```bash
+mvn verify
+```
+
 ## Summary
 
 The accounting pattern is a design pattern used to manage financial transactions and ensure accurate financial reporting. It involves the following key concepts:

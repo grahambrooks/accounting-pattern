@@ -1,5 +1,7 @@
 package accounting.patterns;
 
+import java.util.Arrays;
+
 /**
  * Represents the type of an accounting entry.
  * This enum defines the standard entry types used in the accounting system.
@@ -43,11 +45,10 @@ public enum EntryType {
      * @throws IllegalArgumentException if no EntryType matches the given name
      */
     public static EntryType fromName(String name) {
-        for (EntryType type : values()) {
-            if (type.getName().equalsIgnoreCase(name)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("No EntryType found for name: " + name);
+        return Arrays.stream(values())
+                .filter(type -> type.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No EntryType found for name: " + name));
     }
 }

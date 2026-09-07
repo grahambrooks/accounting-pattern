@@ -7,7 +7,7 @@ import java.util.Objects;
  * Represents an immutable accounting entry with a date, type, and monetary amount.
  * This class is thread-safe and can be used as a value type.
  */
-public final record Entry(
+public record Entry(
     LocalDate entryDate,
     EntryType entryType,
     MonetaryAmount amount

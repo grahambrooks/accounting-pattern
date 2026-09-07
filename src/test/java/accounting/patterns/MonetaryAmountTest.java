@@ -12,14 +12,14 @@ class MonetaryAmountTest {
 
     @Test
     void testZeroConstant() {
-        assertEquals(BigDecimal.ZERO, MonetaryAmount.ZERO.amount());
+        assertEquals(new BigDecimal("0.00"), MonetaryAmount.ZERO.amount());
         assertEquals("USD", MonetaryAmount.ZERO.currency().getCurrencyCode());
     }
 
     @Test
     void testFactoryMethodWithLong() {
         MonetaryAmount amount = MonetaryAmount.of("USD", 100);
-        assertEquals(new BigDecimal(100), amount.amount());
+        assertEquals(new BigDecimal("100.00"), amount.amount());
         assertEquals(USD, amount.currency());
     }
 
@@ -71,5 +71,34 @@ class MonetaryAmountTest {
             () -> assertNotEquals(amount1.hashCode(), amount3.hashCode()),
             () -> assertNotEquals(amount1.hashCode(), amount4.hashCode())
         );
+    }
+
+    @Test
+    void amountsAreNormalisedToTheCurrencyScale() {
+        // BigDecimal equality is scale-sensitive, so 500 and 500.00 are not equal
+        // as raw BigDecimals. MonetaryAmount normalises both to the currency's
+        // scale, which makes equal sums of money compare equal.
+        assertNotEquals(new BigDecimal("500"), new BigDecimal("500.00"));
+
+        assertAll(
+            () -> assertEquals(MonetaryAmount.of(USD, new BigDecimal("500")),
+                               MonetaryAmount.of(USD, new BigDecimal("500.00"))),
+            () -> assertEquals(MonetaryAmount.of(USD, new BigDecimal("500")).hashCode(),
+                               MonetaryAmount.of(USD, new BigDecimal("500.00")).hashCode()),
+            () -> assertEquals(new BigDecimal("500.00"),
+                               MonetaryAmount.of(USD, new BigDecimal("500")).amount())
+        );
+    }
+
+    @Test
+    void excessPrecisionIsRoundedToTheCurrencyScale() {
+        assertEquals(new BigDecimal("10.13"), MonetaryAmount.of(USD, new BigDecimal("10.125")).amount());
+    }
+
+    @Test
+    void currenciesWithoutMinorUnitsAreNotGivenAny() {
+        Currency jpy = Currency.getInstance("JPY");
+
+        assertEquals(new BigDecimal("500"), MonetaryAmount.of(jpy, new BigDecimal("500")).amount());
     }
 }
