@@ -2,12 +2,23 @@
 
 Implementation of Martin Fowler's [accounting patterns article](http://martinfowler.com/apsupp/accounting.pdf) and [Accounting Narrative](http://martinfowler.com/eaaDev/AccountingNarrative.html).
 
+The same pattern is implemented twice — in Java under `src/main/java`, and in
+TypeScript under `src/main/typescript` — so the two can be read side by side.
+
 ## Building
 
-Requires JDK 26 and Maven.
+The Java implementation requires JDK 26 and Maven.
 
 ```bash
 mvn verify
+```
+
+The TypeScript implementation requires Node 24.
+
+```bash
+npm install
+npm run typecheck
+npm test
 ```
 
 ## Summary
