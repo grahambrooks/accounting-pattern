@@ -12,6 +12,7 @@ record AnnualServiceFeeRule(EntryType entryType, long amount) implements Posting
 
     @Override
     public MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate) {
-        return MonetaryAmount.of(USD, BigDecimal.valueOf(quantity.value() * this.amount));
+        return MonetaryAmount.of(USD,
+                BigDecimal.valueOf(quantity.value()).multiply(BigDecimal.valueOf(this.amount)));
     }
 }

@@ -11,11 +11,16 @@ import java.util.Objects;
  *
  * <p>The amount is normalised on construction to the number of decimal places
  * the currency actually uses ({@link Currency#getDefaultFractionDigits()}), so
- * two amounts that represent the same sum of money are always {@code equals},
+ * two amounts that represent the same sum of money are {@code equals}
  * regardless of the scale of the {@link BigDecimal} they were built from.
  * {@code BigDecimal} equality is scale-sensitive — {@code 500} and
  * {@code 500.00} are not equal — which makes an un-normalised money type
  * surprising to compare.
+ *
+ * <p>The exception is a currency that declares no minor units at all
+ * ({@code getDefaultFractionDigits()} returns {@code -1}, as pseudo-currencies
+ * such as {@code XXX} do). There is no scale to normalise to, so those amounts
+ * are stored as supplied and comparing them stays scale-sensitive.
  */
 public record MonetaryAmount(Currency currency, BigDecimal amount) {
     /**
