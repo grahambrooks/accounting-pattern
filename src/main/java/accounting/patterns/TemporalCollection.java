@@ -48,21 +48,7 @@ public final class TemporalCollection<T> {
      */
     public Optional<T> get(LocalDate date) {
         Objects.requireNonNull(date, "Date must not be null");
-        Map.Entry<LocalDate, T> entry = entries.floorEntry(date);
-        return Optional.ofNullable(entry != null ? entry.getValue() : null);
-    }
-
-    /**
-     * Gets the raw value effective on the specified date.
-     * This method is provided for backward compatibility and internal use.
-     * New code should prefer the Optional-returning {@link #get(LocalDate)} method.
-     *
-     * @param date the date to look up
-     * @return the effective value, or null if no value is effective
-     * @throws NullPointerException if date is null
-     */
-    T getRaw(LocalDate date) {
-        return get(date).orElse(null);
+        return Optional.ofNullable(entries.floorEntry(date)).map(Map.Entry::getValue);
     }
 
     /**
@@ -89,7 +75,7 @@ public final class TemporalCollection<T> {
      * @return an Optional containing the earliest date, or empty if the collection is empty
      */
     public Optional<LocalDate> getEarliestDate() {
-        return Optional.ofNullable(entries.firstKey());
+        return Optional.ofNullable(entries.firstEntry()).map(Map.Entry::getKey);
     }
 
     /**
@@ -98,6 +84,6 @@ public final class TemporalCollection<T> {
      * @return an Optional containing the latest date, or empty if the collection is empty
      */
     public Optional<LocalDate> getLatestDate() {
-        return Optional.ofNullable(entries.lastKey());
+        return Optional.ofNullable(entries.lastEntry()).map(Map.Entry::getKey);
     }
 }

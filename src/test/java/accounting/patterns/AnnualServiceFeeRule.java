@@ -3,16 +3,16 @@ package accounting.patterns;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public class AnnualServiceFeeRule extends PostingRule {
-    private final long amount;
-
-    public AnnualServiceFeeRule(EntryType service, long amount) {
-        super(service);
-        this.amount = amount;
-    }
+/**
+ * A flat annual fee, charged per unit of quantity and independent of the
+ * service agreement's rate.
+ */
+record AnnualServiceFeeRule(EntryType entryType, long amount) implements PostingRule {
+    private static final Currency USD = Currency.getInstance("USD");
 
     @Override
-    protected MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate) {
-        return new MonetaryAmount(Currency.getInstance("USD"), new BigDecimal(quantity.value() * this.amount));
+    public MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate) {
+        return MonetaryAmount.of(USD,
+                BigDecimal.valueOf(quantity.value()).multiply(BigDecimal.valueOf(this.amount)));
     }
 }

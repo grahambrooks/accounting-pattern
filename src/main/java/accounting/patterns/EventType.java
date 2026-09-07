@@ -1,5 +1,7 @@
 package accounting.patterns;
 
+import java.util.Arrays;
+
 /**
  * Represents the type of an accounting event.
  * This enum defines the standard event types used in the accounting system.
@@ -43,11 +45,10 @@ public enum EventType {
      * @throws IllegalArgumentException if no EventType matches the given name
      */
     public static EventType fromName(String name) {
-        for (EventType type : values()) {
-            if (type.getName().equalsIgnoreCase(name)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("No EventType found for name: " + name);
+        return Arrays.stream(values())
+                .filter(type -> type.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No EventType found for name: " + name));
     }
 }

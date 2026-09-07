@@ -5,21 +5,19 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Represents a rule for posting accounting entries.
- * This abstract class defines the base functionality for creating entries based on events.
+ * A rule for turning an event into an accounting entry.
+ *
+ * <p>Implementations supply the entry type they produce and the arithmetic that
+ * turns a quantity and a rate into an amount; assembling the {@link Entry} is
+ * common to all of them and lives here.
  */
-abstract class PostingRule  {
-    protected final EntryType eventType;
-
+public interface PostingRule {
     /**
-     * Creates a new PostingRule for the specified entry type.
+     * The type of the entries this rule creates.
      *
-     * @param type the type of entries this rule will create
-     * @throws NullPointerException if type is null
+     * @return the entry type
      */
-    protected PostingRule(EntryType type) {
-        this.eventType = Objects.requireNonNull(type, "Entry type must not be null");
-    }
+    EntryType entryType();
 
     /**
      * Calculates the monetary amount for an entry based on quantity and rate.
@@ -29,7 +27,7 @@ abstract class PostingRule  {
      * @return the calculated monetary amount
      * @throws NullPointerException if quantity or rate is null
      */
-     abstract MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate);
+    MonetaryAmount calculateAmount(Quantity quantity, BigDecimal rate);
 
     /**
      * Processes an event and creates a corresponding entry.
@@ -40,11 +38,11 @@ abstract class PostingRule  {
      * @return the created entry
      * @throws NullPointerException if any parameter is null
      */
-    public Entry processEvent(LocalDate eventDate, Quantity quantity, BigDecimal rate) {
+    default Entry processEvent(LocalDate eventDate, Quantity quantity, BigDecimal rate) {
         Objects.requireNonNull(eventDate, "Event date must not be null");
         Objects.requireNonNull(quantity, "Quantity must not be null");
         Objects.requireNonNull(rate, "Rate must not be null");
 
-        return Entry.of(eventDate, eventType, calculateAmount(quantity, rate));
+        return Entry.of(eventDate, entryType(), calculateAmount(quantity, rate));
     }
 }
