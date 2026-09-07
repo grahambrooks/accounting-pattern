@@ -1,0 +1,21 @@
+src/main/java/accounting/patterns/MonetaryAmount.java
+  s_d2fd10de00a75a::t_40fdc1b31978af 14,19-23
+src/test/java/accounting/patterns/AnnualServiceFeeRule.java
+  s_d2fd10de00a75a::t_a5a4f364feea8c 15-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "5205b6c6d0b5d9e2af2653438f59da408ad1fac8",
+  "prompts": {},
+  "sessions": {
+    "s_d2fd10de00a75a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ab50ea11-eb1f-4058-853e-5a1bbc0518e2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Graham Brooks <graham@grahambrooks.com>"
+    }
+  }
+}
