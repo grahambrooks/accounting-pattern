@@ -24,3 +24,15 @@ jobs:
           java-version: "26"
           cache: maven
       - run: mvn -B --no-transfer-progress verify
+
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
