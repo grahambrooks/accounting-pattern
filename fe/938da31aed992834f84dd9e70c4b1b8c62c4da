@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_d2fd10de00a75a::t_1b69d506e87672 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "fe938da31aed992834f84dd9e70c4b1b8c62c4da",
+  "prompts": {},
+  "sessions": {
+    "s_d2fd10de00a75a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ab50ea11-eb1f-4058-853e-5a1bbc0518e2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Graham Brooks <graham@grahambrooks.com>"
+    }
+  }
+}
