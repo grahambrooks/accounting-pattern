@@ -1,0 +1,21 @@
+package-lock.json
+  s_c7db583e01ac64::t_de5d97617c5e3f 11-12,44-46,55-57,73-75,91-93,109-111,127-129,145-147,163-165,181-183,199-201,217-219,235-237,253-255,271-273,289-291,307-309,357-696,698-700,705,707,713,726-728,1131-1133,1166-1168,1187,1196-1198,1203,1213-1227,1286-1288,1292,1295-1317,1321-1323,1330-1331,1348,1400-1402,1407-1408,1411-1412,1414-1416,1433-1434,1436-1438
+package.json
+  s_c7db583e01ac64::t_efd28ce7c72a9d 12-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aefa065d1882abbf0cc6db59bc4e82b9efa7217e",
+  "prompts": {},
+  "sessions": {
+    "s_c7db583e01ac64": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a64f563f-ca61-4776-97cf-501db44bb230",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Graham Brooks <graham@grahambrooks.com>"
+    }
+  }
+}
